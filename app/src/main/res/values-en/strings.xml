@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">TimeZone</string>
+    <string name="ZonaHoraria">TimeZone Converter</string>
+    <string name="seleccionar_hora" >Select time </string>
+    <string name="selecciona_un_pais"> Select country </string>
+</resources>

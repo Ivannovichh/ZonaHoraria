@@ -1,4 +1,4 @@
-package es.medac.horabinding;
+package es.medac;
 
 import android.content.Context;
 
@@ -21,6 +21,6 @@ public class ExampleInstrumentedTest {
     public void useAppContext() {
         // Context of the app under test.
         Context appContext = InstrumentationRegistry.getInstrumentation().getTargetContext();
-        assertEquals("es.medac.horabinding", appContext.getPackageName());
+        assertEquals("es.medac.miedadcanina", appContext.getPackageName());
     }
 }

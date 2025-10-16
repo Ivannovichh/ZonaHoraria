@@ -19,5 +19,5 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "HoraBinding"
+rootProject.name = "ZonaHorariaBinding"
 include ':app'

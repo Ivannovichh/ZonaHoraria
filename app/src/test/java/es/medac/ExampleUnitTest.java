@@ -1,4 +1,4 @@
-package es.medac.horabinding;
+package es.medac;
 
 import org.junit.Test;
 

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?><resources>
+    <!-- Estilo principal para los botones de la calculadora -->
+    <style name="CalculatorButton" parent="Widget.MaterialComponents.Button"> <!-- Cambiado a MaterialComponents -->
+        <!-- Ancho dinámico para que se reparta el espacio con 'columnWeight' -->
+        <item name="android:layout_width">0dp</item>
+        <!-- Altura ajustada al contenido del botón -->
+        <item name="android:layout_height">wrap_content</item>
+        <!-- Asigna un "peso" para distribuir el espacio horizontal en el GridLayout -->
+        <item name="android:layout_columnWeight">1</item>
+        <!-- Rellena el ancho de la celda de la cuadrícula -->
+        <item name="android:layout_gravity">fill_horizontal</item>
+        <!-- Margen exterior para separar los botones entre sí -->
+        <item name="android:layout_margin">6dp</item>
+        <!-- Relleno interior para que el texto no esté pegado al borde -->
+        <item name="android:padding">12dp</item>
+        <!-- Establece una fuente de ancho fijo (estilo máquina de escribir) -->
+        <item name="android:fontFamily">monospace</item>
+        <!-- Tamaño del texto del botón -->
+        <item name="android:textSize">22sp</item>
+        <!-- Color del texto del botón -->
+        <item name="android:textColor">@color/white</item>
+        <!-- Color de fondo del botón -->
+        <item name="android:backgroundTint">@color/lila</item>
+        <!-- Añade una pequeña sombra para dar efecto de elevación -->
+        <item name="android:elevation">4dp</item>
+
+        <!-- Modificamos las esquinas de los botones -->
+        <item name="cornerRadius">100dp</item>
+    </style>
+
+    <!-- Estilo para el botón de borrar (DEL), que hereda del estilo anterior -->
+    <style name="CalculatorButtonPrimary" parent="CalculatorButton">
+        <!-- Hereda todas las propiedades de "CalculatorButton" y solo cambia el fondo -->
+        <item name="android:backgroundTint">@color/orange</item>
+    </style>
+</resources>
