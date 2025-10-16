@@ -4,56 +4,42 @@
     <string name="seleccionar_hora"> Seleccionar Hora </string>
     <string name="selecciona_un_pais"> Selecciona un país </string>
 
-    <!-- 1. Array lista que apunta a los otros arrays -->
-    <string-array name="lista_zonas_horarias" translatable="false">
-        <item>@array/paises_utc_menos_3</item>
-        <item>@array/paises_utc_menos_2</item>
-        <item>@array/paises_utc_menos_1</item>
-        <item>@array/paises_utc_0</item>
-        <item>@array/paises_utc_mas_1</item>
-        <item>@array/paises_utc_mas_2</item>
-        <item>@array/paises_utc_mas_3</item>
-    </string-array>
+        <!-- Etiquetas a mostrar en el Spinner: "País - UTC±X" -->
+        <string-array name="utc_labels">
+            <item>Reino Unido - UTC+0</item>
+            <item>España (Península) - UTC+1</item>
+            <item>Francia - UTC+1</item>
+            <item>Alemania - UTC+1</item>
+            <item>Portugal - UTC+0</item>
+            <item>Estados Unidos (Eastern) - UTC-5</item>
+            <item>Estados Unidos (Pacific) - UTC-8</item>
+            <item>Argentina - UTC-3</item>
+            <item>Brasil (Brasilia) - UTC-3</item>
+            <item>Chile - UTC-4</item>
+            <item>Japón - UTC+9</item>
+            <item>Australia (Sydney) - UTC+10</item>
+            <item>México (CDMX) - UTC-6</item>
+            <item>Colombia - UTC-5</item>
+            <item>Sudáfrica - UTC+2</item>
+        </string-array>
 
-    <string-array name="paises_utc_menos_3">
-        <item>Argentina</item>
-        <item>Brasil</item>
-        <item>Chile</item>
-    </string-array>
-
-    <string-array name="paises_utc_menos_2">
-        <item>Bolivia (UTC-4)</item>
-        <item>Colombia (UTC-5)</item>
-        <item>Ecuador (UTC-5)</item>
-    </string-array>
-
-    <string-array name="paises_utc_menos_1">
-        <item>Cabo Verde</item>
-        <item>Azores (Portugal)</item>
-    </string-array>
-
-    <string-array name="paises_utc_0">
-        <item>Islas Canarias</item>
-        <item>Reino Unido</item>
-        <item>Islandia</item>
-    </string-array>
-
-    <string-array name="paises_utc_mas_1">
-        <item>Alemania</item>
-        <item>España (Península)</item>
-        <item>Italia</item>
-    </string-array>
-
-    <string-array name="paises_utc_mas_2">
-        <item>Grecia</item>
-        <item>Finlandia</item>
-        <item>Egipto</item>
-    </string-array>
-
-    <string-array name="paises_utc_mas_3">
-        <item>Rusia (Moscú)</item>
-        <item>Irak</item>
-        <item>Kenia</item>
-    </string-array>
-
+        <!-- Offsets en horas correspondientes a cada etiqueta anterior.
+             Mantener el mismo orden que en utc_labels. Pueden ser +1, 0, -5, etc. -->
+        <string-array name="utc_offsets">
+            <item>0</item>
+            <item>1</item>
+            <item>1</item>
+            <item>1</item>
+            <item>0</item>
+            <item>-5</item>
+            <item>-8</item>
+            <item>-3</item>
+            <item>-3</item>
+            <item>-4</item>
+            <item>9</item>
+            <item>10</item>
+            <item>-6</item>
+            <item>-5</item>
+            <item>2</item>
+        </string-array>
 </resources>

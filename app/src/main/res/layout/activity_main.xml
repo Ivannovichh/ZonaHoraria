@@ -1,61 +1,47 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools">
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/root_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp">
 
-    <data>
-
-    </data>
-
-    <LinearLayout
-        android:id="@+id/main"
+    <!-- Spinner (combo) para seleccionar país / zona UTC -->
+    <TextView
+        android:id="@+id/tv_select_zone"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/cyan"
-        android:orientation="vertical"
-        tools:context=".MainActivity">
+        android:layout_height="wrap_content"
+        android:text="Selecciona zona / país"
+        android:textStyle="bold"
+        android:paddingBottom="8dp" />
 
-        <!-- GIF de fondo -->
-        <pl.droidsonroids.gif.GifImageView
-            android:id="@+id/fondoGif"
-            android:layout_width="match_parent"
-            android:layout_height="276dp"
-            android:scaleType="centerCrop"
-            android:src="@drawable/fondo" />
+    <Spinner
+        android:id="@+id/spinner_zones"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
 
-        <!-- Título -->
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:fontFamily="monospace"
-            android:gravity="center"
-            android:padding="15dp"
-            android:text="@string/ZonaHoraria"
-            android:textColor="@color/black"
-            android:textSize="28sp"/>
+    <!-- TimePicker inline (sin botón). Se ve directamente en la UI -->
+    <TextView
+        android:id="@+id/tv_select_time"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Selecciona hora local"
+        android:textStyle="bold"
+        android:paddingTop="16dp"
+        android:paddingBottom="8dp" />
 
-        <Button
-            android:id="@+id/btnHora"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginTop="20dp"
-            android:gravity="center"
-            android:text="@string/seleccionar_hora" />
+    <TimePicker
+        android:id="@+id/time_picker"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
 
-        <!-- INICIO DEL COMBOBOX PARA SELECCIONAR PAÍS -->
-        <Spinner
-            android:id="@+id/autoCompletePaises"
-            android:layout_width="match_parent"
-            android:layout_height="56dp"
-            android:layout_marginStart="32dp"
-            android:layout_marginTop="16dp"
-            android:layout_marginEnd="32dp"
-            android:background="@android:drawable/btn_dropdown"
-            android:paddingStart="12dp"
-            android:paddingEnd="12dp"
-            android:hint="@string/selecciona_un_pais"/>
-        <!-- FIN DEL COMBOBOX -->
+    <!-- Resultado: diferencia y hora convertida -->
+    <TextView
+        android:id="@+id/tv_result"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Resultado aparecerá aquí"
+        android:paddingTop="24dp"
+        android:textSize="16sp" />
 
-    </LinearLayout>
-</layout>
+</LinearLayout>

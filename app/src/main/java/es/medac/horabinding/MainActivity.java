@@ -1,105 +1,150 @@
-package es.medac.horabinding;
+package es.medac.horabinding; // <- CAMBIA esto por tu package real si es distinto
 
-import android.content.res.TypedArray;
+import android.os.Build;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
-import android.widget.Toast;
+import android.widget.Spinner;
+import android.widget.TextView;
+import android.widget.TimePicker;
 
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.google.android.material.timepicker.MaterialTimePicker;
-import com.google.android.material.timepicker.TimeFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Locale;
+import java.util.TimeZone;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Date;
-import java.util.List;
+import es.medac.horabinding.R;
 
-import es.medac.horabinding.databinding.ActivityMainBinding;
-
-import pl.droidsonroids.gif.AnimationListener;
-import pl.droidsonroids.gif.GifDrawable;
-
+/**
+ * Actividad principal que muestra:
+ * - Un TimePicker embebido (inline) para elegir hora local.
+ * - Un Spinner (combobox) poblado desde strings.xml con países/zonas UTC.
+ * - Calcula la diferencia horaria entre la zona seleccionada y la zona local
+ *   y muestra la hora convertida.
+ *
+ * Comentarios en el código describen de forma genérica qué hace cada bloque.
+ */
 public class MainActivity extends AppCompatActivity {
 
-    // 2. La declaración del objeto Binding como variable de la clase es correcta.
-    private ActivityMainBinding binding;
+    private TimePicker timePicker;
+    private Spinner spinnerZones;
+    private TextView tvResult;
 
+    private String[] zoneLabels;
+    private String[] zoneOffsets; // offsets en horas, como "-5", "1", "0", etc.
+
+    @RequiresApi(api = Build.VERSION_CODES.M) // getHour/getMinute requieren API 23+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        // Se establece el layout de la actividad
         setContentView(R.layout.activity_main);
 
-        // Conectamos el botón del XML
-        Button btnHora = findViewById(R.id.btnHora);
+        // Se obtienen referencias UI
+        timePicker = findViewById(R.id.time_picker);
+        spinnerZones = findViewById(R.id.spinner_zones);
+        tvResult = findViewById(R.id.tv_result);
 
-        //Le ponemos un listener para abrir el TimePicker
-        btnHora.setOnClickListener(v -> {
+        // Mostrar TimePicker en formato 24 horas
+        timePicker.setIs24HourView(true);
 
-            // ESTE ES EL CÓDIGO DEL TIMEPICKER
-            MaterialTimePicker timePicker = new MaterialTimePicker.Builder()
-                    .setTimeFormat(TimeFormat.CLOCK_24H) // formato 24 horas
-                    .setHour(12) // hora inicial
-                    .setMinute(0) // minuto inicial
-                    .setTitleText("Selecciona la hora")
-                    .build();
+        // Cargar arrays definidos en strings.xml
+        zoneLabels = getResources().getStringArray(R.array.utc_labels);
+        zoneOffsets = getResources().getStringArray(R.array.utc_offsets);
 
-            // Mostrar el picker
-            timePicker.show(getSupportFragmentManager(), "TIME_PICKER");
+        // Crear un ArrayAdapter simple para el Spinner y asignarlo
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(this,
+                android.R.layout.simple_spinner_item, zoneLabels);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinnerZones.setAdapter(adapter);
 
-            // Escuchar cuando el usuario confirma la hora
-            timePicker.addOnPositiveButtonClickListener(view -> {
-                int hour = timePicker.getHour();
-                int minute = timePicker.getMinute();
-                Log.d("TIME", "Hora seleccionada: " + hour + ":" + minute);
-            });
-        });
-        // Dentro del método onCreate de MainActivity.java
-
-// --- CÓDIGO PARA RELLENAR EL DESPLEGABLE CON GRUPOS ---
-
-// 1. Crear una lista para almacenar todos los países de todas las zonas
-        List<String> todosLosPaises = new ArrayList<>();
-
-// 2. Obtener la referencia al array "índice" de zonas horarias
-        TypedArray listaZonas = getResources().obtainTypedArray(R.array.lista_zonas_horarias);
-
-// 3. Recorrer el array índice para leer cada grupo de países
-        for (int i = 0; i < listaZonas.length(); i++) {
-            // Obtenemos el ID del recurso de cada array de países (ej: R.array.paises_utc_menos_3)
-            int resourceId = listaZonas.getResourceId(i, 0);
-
-            if (resourceId > 0) {
-                // Obtenemos el array de strings de países para esa zona
-                String[] paisesDeLaZona = getResources().getStringArray(resourceId);
-                // Añadimos todos los países de esa zona a nuestra lista principal
-                Collections.addAll(todosLosPaises, paisesDeLaZona);
+        // Listener para cambios en el TimePicker: recalcula resultado
+        timePicker.setOnTimeChangedListener(new TimePicker.OnTimeChangedListener() {
+            @Override
+            public void onTimeChanged(TimePicker view, int hourOfDay, int minute) {
+                updateResult(); // actualiza la conversión al cambiar la hora
             }
-        }
-        // Liberar la memoria usada por TypedArray
-            listaZonas.recycle();
+        });
 
-        // 4. Crear el adaptador con la lista combinada de todos los países
-            ArrayAdapter<String> adapter = new ArrayAdapter<>(
-                this,
-                android.R.layout.simple_dropdown_item_1line,
-                todosLosPaises // Usamos la lista que hemos construido
-            );
+        // Listener para selección en el Spinner: recalcula resultado
+        spinnerZones.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, android.view.View view, int position, long id) {
+                updateResult(); // actualiza la conversión al cambiar la zona seleccionada
+            }
 
-        // 5. Asignar el adaptador al componente
-            binding.autoCompletePaises.setAdapter(adapter);
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+                // No se hace nada si no hay selección
+            }
+        });
 
-        // --- FIN DEL CÓDIGO ---
-
-        // Listener para saber qué país se ha seleccionado
-            binding.autoCompletePaises.setOnItemClickListener((parent, view, position, id) -> {
-                String paisSeleccionado = (String) parent.getItemAtPosition(position);
-                Toast.makeText(this, "País: " + paisSeleccionado, Toast.LENGTH_SHORT).show();
-            });
+        // Inicializar el resultado con la selección por defecto
+        updateResult();
     }
 
+    /**
+     * Método que calcula la diferencia horaria (en horas) entre la zona seleccionada
+     * (según utc_offsets en strings.xml) y la zona local del dispositivo, y luego
+     * calcula la hora convertida a la zona seleccionada usando la hora elegida en TimePicker.
+     *
+     * Muestra la diferencia y la hora convertida en tvResult.
+     */
+    @RequiresApi(api = Build.VERSION_CODES.M)
+    private void updateResult() {
+        // Tomar hora y minuto desde el TimePicker (API 23+)
+        int hour = timePicker.getHour();
+        int minute = timePicker.getMinute();
+
+        // Obtener offset local en horas (considerando DST)
+        TimeZone tz = TimeZone.getDefault();
+        long now = System.currentTimeMillis();
+        int localOffsetHours = tz.getOffset(now) / (1000 * 60 * 60);
+
+        // Obtener offset seleccionado desde zoneOffsets
+        int pos = spinnerZones.getSelectedItemPosition();
+        int selectedOffsetHours = 0;
+        try {
+            selectedOffsetHours = Integer.parseInt(zoneOffsets[pos].trim());
+        } catch (Exception e) {
+            // Si hay problema parsing, se asume 0
+            selectedOffsetHours = 0;
+        }
+
+        // Calcular diferencia: selected - local (por ejemplo si local = +1 y selected = -5 -> -6)
+        int diffHours = selectedOffsetHours - localOffsetHours;
+
+        // Crear un Calendar con la hora local seleccionada
+        Calendar cal = Calendar.getInstance();
+        cal.set(Calendar.SECOND, 0);
+        cal.set(Calendar.MILLISECOND, 0);
+        cal.set(Calendar.HOUR_OF_DAY, hour);
+        cal.set(Calendar.MINUTE, minute);
+
+        // Clonar calendario y añadir la diferencia para obtener hora en zona seleccionada
+        Calendar converted = (Calendar) cal.clone();
+        converted.add(Calendar.HOUR_OF_DAY, diffHours);
+
+        // Formatear horas para mostrar
+        SimpleDateFormat sdf = new SimpleDateFormat("HH:mm", Locale.getDefault());
+        String localTimeStr = sdf.format(cal.getTime());
+        String convertedTimeStr = sdf.format(converted.getTime());
+
+        // Preparar texto de salida
+        String diffSign = (diffHours >= 0) ? "+" + diffHours : String.valueOf(diffHours);
+        String zoneLabel = (pos >= 0 && pos < zoneLabels.length) ? zoneLabels[pos] : "Zona seleccionada";
+
+        // Mostrar resultado: zona, offset, diferencia y hora convertida
+        String result = "Zona: " + zoneLabel + "\n"
+                + "Offset seleccionado: UTC" + (selectedOffsetHours >= 0 ? "+" + selectedOffsetHours : selectedOffsetHours) + "\n"
+                + "Offset local: UTC" + (localOffsetHours >= 0 ? "+" + localOffsetHours : localOffsetHours) + "\n"
+                + "Diferencia (horas): " + diffSign + "\n\n"
+                + "Hora local seleccionada: " + localTimeStr + "\n"
+                + "Hora en zona seleccionada: " + convertedTimeStr;
+
+        tvResult.setText(result);
+    }
 }
