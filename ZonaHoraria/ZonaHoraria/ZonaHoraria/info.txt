@@ -1,0 +1,2 @@
+Este es el archivo info.txt dentro de la carpeta ZonaHoraria.
+Creado automáticamente con PowerShell.
