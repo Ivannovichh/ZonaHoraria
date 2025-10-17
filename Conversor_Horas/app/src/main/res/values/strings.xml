@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="nombreApp" translatable="false">ConversorHoras</string>
+    <string name="tituloApp">Conversor de zonas horarias</string>
+    <string name="seleccionarOrigen">Selecciona tu país y la hora local</string>
+    <string name="seleccionarDestino">Selecciona país destino</string>
+    <string name="textoBoton">Convertir</string>
+    <string name="horaLocal">Hora introducida en</string>
+    <string name="horaDestino">Hora en</string>
+    <string name="diferenciaHoraria">Diferencia horaria</string>
+</resources>

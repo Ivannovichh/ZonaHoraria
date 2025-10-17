@@ -1,0 +1,26 @@
+{
+    "logs": [
+        {
+            "outputFile": "com.example.worldtimeutc.app-mergeDebugResources-30:/values-en/values-en.xml",
+            "map": [
+                {
+                    "source": "C:\\Users\\ivans.DESKTOP-IO55MRG\\Downloads\\Conversor_Horas\\Conversor_Horas\\app\\src\\main\\res\\values-en\\strings.xml",
+                    "from": {
+                        "startLines": "8,7,6,4,3,5,2",
+                        "startColumns": "4,4,4,4,4,4,4",
+                        "startOffsets": "426,377,321,198,116,273,57",
+                        "endColumns": "61,47,54,73,80,46,57",
+                        "endOffsets": "483,420,371,267,192,315,110"
+                    },
+                    "to": {
+                        "startLines": "2,3,4,5,6,7,8",
+                        "startColumns": "4,4,4,4,4,4,4",
+                        "startOffsets": "55,117,165,220,294,375,422",
+                        "endColumns": "61,47,54,73,80,46,57",
+                        "endOffsets": "112,160,215,289,370,417,475"
+                    }
+                }
+            ]
+        }
+    ]
+}
