@@ -4,9 +4,6 @@ import android.os.Build;
 import android.os.Bundle;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.Spinner;
-import android.widget.TextView;
-import android.widget.TimePicker;
 
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
@@ -15,80 +12,68 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Locale;
 
-/*
- * Actividad principal del Conversor de Zona Horaria.
- * Permite seleccionar hora, país de origen y destino,
- * y convierte la hora automáticamente según el desfase UTC.
- * El encabezado muestra un GIF animado usando GifImageView.
- */
+// IMPORTANTE: esta clase la genera Data Binding a partir de res/layout/activity_main.xml
+import es.medac.horabinding.databinding.ActivityMainBinding;
+
 public class MainActivity extends AppCompatActivity {
 
-    private TimePicker timePicker;
-    private Spinner spinnerFrom;
-    private Spinner spinnerTo;
-    private TextView tvResult;
+    // Binding del layout: da acceso a todas las vistas del XML
+    private ActivityMainBinding binding;
 
+    // Datos para poblar los spinners
     private String[] zoneLabels;
-    private String[] zoneOffsets; // Offsets horarios (por ejemplo: "-5", "1", "0")
+    private String[] zoneOffsets;
 
     @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
 
-        // Referencias visuales
-        timePicker = findViewById(R.id.time_picker);
-        spinnerFrom = findViewById(R.id.spinner_zones_from);
-        spinnerTo   = findViewById(R.id.spinner_zones_to);
-        tvResult    = findViewById(R.id.tv_result);
+        // 1) Inflar el layout mediante Data Binding y establecer la vista raíz
+        binding = ActivityMainBinding.inflate(getLayoutInflater());
+        setContentView(binding.getRoot());
 
-        // Configura el TimePicker en formato 24h
-        timePicker.setIs24HourView(true);
+        // 2) Configurar vistas usando binding (sin findViewById)
+        binding.timePicker.setIs24HourView(true);
 
-        // Carga las zonas horarias desde strings.xml
+        // 3) Cargar arrays desde resources
         zoneLabels  = getResources().getStringArray(R.array.utc_labels);
         zoneOffsets = getResources().getStringArray(R.array.utc_offsets);
 
-        // Crea el adaptador para ambos spinners
+        // 4) Adaptador para ambos spinners
         ArrayAdapter<String> adapter = new ArrayAdapter<>(
                 this,
                 android.R.layout.simple_spinner_item,
                 zoneLabels
         );
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinnerFrom.setAdapter(adapter);
-        spinnerTo.setAdapter(adapter);
+        binding.spinnerZonesFrom.setAdapter(adapter);
+        binding.spinnerZonesTo.setAdapter(adapter);
 
-        // Listener para el cambio de hora
-        timePicker.setOnTimeChangedListener((view, hourOfDay, minute) -> updateResult());
+        // 5) Listeners de cambios: hora y selección de zona
+        binding.timePicker.setOnTimeChangedListener((view, hourOfDay, minute) -> updateResult());
 
-        // Listener para el cambio de selección de zona
         AdapterView.OnItemSelectedListener spinListener = new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, android.view.View view, int position, long id) {
+            @Override public void onItemSelected(AdapterView<?> parent, android.view.View view, int position, long id) {
                 updateResult();
             }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) { }
+            @Override public void onNothingSelected(AdapterView<?> parent) { }
         };
+        binding.spinnerZonesFrom.setOnItemSelectedListener(spinListener);
+        binding.spinnerZonesTo.setOnItemSelectedListener(spinListener);
 
-        spinnerFrom.setOnItemSelectedListener(spinListener);
-        spinnerTo.setOnItemSelectedListener(spinListener);
-
-        // Calcula y muestra la conversión inicial
+        // 6) Cálculo inicial
         updateResult();
     }
 
-    // Calcula la conversión de hora entre zonas horarias
+    // Calcula y muestra la conversión de hora entre zonas seleccionadas
     @RequiresApi(api = Build.VERSION_CODES.M)
     private void updateResult() {
-        int hour = timePicker.getHour();
-        int minute = timePicker.getMinute();
+        int hour   = binding.timePicker.getHour();
+        int minute = binding.timePicker.getMinute();
 
-        int posFrom = spinnerFrom.getSelectedItemPosition();
-        int posTo   = spinnerTo.getSelectedItemPosition();
+        int posFrom = binding.spinnerZonesFrom.getSelectedItemPosition();
+        int posTo   = binding.spinnerZonesTo.getSelectedItemPosition();
 
         int fromOffsetHours = parseOffset(zoneOffsets, posFrom);
         int toOffsetHours   = parseOffset(zoneOffsets, posTo);
@@ -117,10 +102,10 @@ public class MainActivity extends AppCompatActivity {
                 + "Hora en origen: " + fromTimeStr + "\n"
                 + "Hora en destino: " + toTimeStr;
 
-        tvResult.setText(result);
+        binding.tvResult.setText(result);
     }
 
-    // Convierte texto de offset en número entero
+    // Convierte texto de offset en entero seguro
     private int parseOffset(String[] offsets, int pos) {
         try {
             if (pos >= 0 && pos < offsets.length) {
@@ -130,7 +115,7 @@ public class MainActivity extends AppCompatActivity {
         return 0;
     }
 
-    // Devuelve un número con signo (+ o -)
+    // Devuelve el número con signo explícito
     private String signed(int h) {
         return (h >= 0) ? ("+" + h) : String.valueOf(h);
     }
