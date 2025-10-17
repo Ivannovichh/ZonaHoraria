@@ -1,7 +1,44 @@
-<?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">TimeZone</string>
-    <string name="ZonaHoraria">TimeZone Converter</string>
-    <string name="seleccionar_hora" >Select time </string>
-    <string name="selecciona_un_pais"> Select country </string>
+    <string name="app_name" translatable="false">TimeZoneConverter</string>
+    <string name="ZonaHoraria" translatable="false">Time Zone Converter</string>
+    <string name="seleccionar_hora">Select Time</string>
+    <string name="selecciona_un_pais">Select a country</string>
+
+    <!-- Time zones list ordered from UTC-8 to UTC+10 -->
+    <string-array name="utc_labels">
+        <item>United States (Pacific) - UTC-8</item>
+        <item>United States (Eastern) - UTC-5</item>
+        <item>Colombia - UTC-5</item>
+        <item>Mexico City - UTC-6</item>
+        <item>Chile - UTC-4</item>
+        <item>Argentina - UTC-3</item>
+        <item>Brazil (Brasília) - UTC-3</item>
+        <item>Portugal - UTC+0</item>
+        <item>United Kingdom - UTC+0</item>
+        <item>Spain (Mainland) - UTC+1</item>
+        <item>France - UTC+1</item>
+        <item>Germany - UTC+1</item>
+        <item>South Africa - UTC+2</item>
+        <item>Japan - UTC+9</item>
+        <item>Australia (Sydney) - UTC+10</item>
+    </string-array>
+
+    <!-- Corresponding UTC offsets in the same order -->
+    <string-array name="utc_offsets">
+        <item>-8</item>
+        <item>-5</item>
+        <item>-5</item>
+        <item>-6</item>
+        <item>-4</item>
+        <item>-3</item>
+        <item>-3</item>
+        <item>0</item>
+        <item>0</item>
+        <item>1</item>
+        <item>1</item>
+        <item>1</item>
+        <item>2</item>
+        <item>9</item>
+        <item>10</item>
+    </string-array>
 </resources>

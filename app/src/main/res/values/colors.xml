@@ -1,9 +1,89 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!--
+    Archivo de paleta de colores de la app.
+    Define colores base y de acento que se emplean en fondos, textos y componentes.
+    Las vistas del layout hacen referencia a estos recursos por id (ej. @color/sky).
+-->
 <resources>
+
+    <!--
+        Color principal de fondo inspirado en el cielo del GIF.
+        Se usa como color de fondo global de la pantalla para que se funda con el GIF.
+        Ejemplo de uso: android:background="@color/sky" o @color/gif_background (idéntico tono).
+    -->
+    <color name="sky">#8ED6E6</color>
+
+    <!--
+        Color de acento azulado (mar) para elementos secundarios o detalles decorativos.
+        Útil para líneas, iconos o resaltados suaves.
+    -->
+    <color name="sea">#2F9ED1</color>
+
+    <!--
+        Color de acento naranja/ámbar.
+        Útil para separar secciones, indicadores o pequeños elementos de énfasis.
+    -->
+    <color name="amber">#FFA726</color>
+
+    <!--
+        Color de fondo de los paneles y tarjetas.
+        Da contraste contra el fondo “sky” para mejorar la legibilidad del contenido.
+    -->
+    <color name="panel_bg">#FFFFFFFF</color>
+
+    <!--
+        Color de texto principal (títulos y rótulos).
+        Contrasta bien sobre paneles blancos y fondos claros.
+    -->
+    <color name="ink">#12324A</color>
+
+    <!--
+        Color de texto secundario (descripciones y metainformación).
+        Más suave que el principal para jerarquía visual.
+    -->
+    <color name="ink_soft">#385A73</color>
+
+    <!--
+        Negro estándar en formato ARGB.
+        Útil para iconos oscuros o sombras cuando se necesite máximo contraste.
+    -->
     <color name="black">#FF000000</color>
+
+    <!--
+        Blanco estándar en formato ARGB.
+        Útil para texto sobre fondos oscuros o para contenidos sobre overlays.
+    -->
     <color name="white">#FFFFFFFF</color>
+
+    <!--
+        Color lila para acentos opcionales (badges, chips o estados).
+        Úsalo con moderación para no romper la paleta principal.
+    -->
     <color name="lila">#AA24DE</color>
+
+    <!--
+        Color cian/menta para acentos livianos (éxito suave, indicadores pasivos).
+        Puede emplearse en fondos de chips o indicadores sutiles.
+    -->
     <color name="cyan">#91EDBD</color>
+
+    <!--
+        Gris neutro para textos deshabilitados, bordes o iconografía secundaria.
+        Evita usarlo en textos primarios por legibilidad.
+    -->
     <color name="grey">#545454</color>
+
+    <!--
+        Naranja suave alternativo al ámbar.
+        Útil para estados de advertencia suaves o botones secundarios de acento.
+    -->
     <color name="orange">#EF965A</color>
+
+    <!--
+        Color que iguala el fondo del GIF (mismo valor que 'sky').
+        Se usa como fondo del root para fusionar visualmente el GIF con el resto de la pantalla.
+        Ejemplo de uso: android:background="@color/gif_background".
+    -->
+    <color name="gif_background">#8ED6E6</color>
+
 </resources>

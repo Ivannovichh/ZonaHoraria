@@ -1,47 +1,141 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/root_layout"
+<!--
+    Layout principal del conversor de zona horaria.
+    Incluye:
+    - GIF animado con título superpuesto.
+    - Controles para seleccionar zonas y hora.
+    - Resultado calculado.
+-->
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/root"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:padding="16dp">
+    android:background="@color/gif_background"
+    android:padding="12dp">
 
-    <!-- Spinner (combo) para seleccionar país / zona UTC -->
-    <TextView
-        android:id="@+id/tv_select_zone"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Selecciona zona / país"
-        android:textStyle="bold"
-        android:paddingBottom="8dp" />
+    <!-- Cabecera con GIF animado y título -->
+    <FrameLayout
+        android:id="@+id/header_container"
+        android:layout_width="0dp"
+        android:layout_height="180dp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
 
-    <Spinner
-        android:id="@+id/spinner_zones"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        <!-- GIF animado del globo -->
+        <pl.droidsonroids.gif.GifImageView
+            android:id="@+id/fondoGIF"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:adjustViewBounds="true"
+            android:scaleType="fitCenter"
+            android:src="@drawable/fondo"
+            android:contentDescription="@string/ZonaHoraria" />
 
-    <!-- TimePicker inline (sin botón). Se ve directamente en la UI -->
-    <TextView
-        android:id="@+id/tv_select_time"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Selecciona hora local"
-        android:textStyle="bold"
-        android:paddingTop="16dp"
-        android:paddingBottom="8dp" />
+        <!-- Título superpuesto centrado -->
+        <TextView
+            android:id="@+id/title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/ZonaHoraria"
+            android:textStyle="bold"
+            android:textSize="26sp"
+            android:textColor="@android:color/white"
+            android:shadowColor="#88000000"
+            android:shadowDx="0"
+            android:shadowDy="2"
+            android:shadowRadius="5"
+            android:background="@drawable/bg_title_overlay"
+            android:paddingHorizontal="20dp"
+            android:paddingVertical="6dp"
+            android:layout_gravity="center" />
+    </FrameLayout>
 
-    <TimePicker
-        android:id="@+id/time_picker"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+    <!-- Panel con controles -->
+    <LinearLayout
+        android:id="@+id/panel"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:orientation="vertical"
+        android:background="@drawable/bg_panel"
+        android:padding="14dp"
+        android:layout_marginTop="4dp"
+        app:layout_constraintTop_toBottomOf="@id/header_container"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
 
-    <!-- Resultado: diferencia y hora convertida -->
-    <TextView
-        android:id="@+id/tv_result"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Resultado aparecerá aquí"
-        android:paddingTop="24dp"
-        android:textSize="16sp" />
+        <!-- Zona de origen -->
+        <TextView
+            android:id="@+id/tv_select_zone_from"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Zona de origen (donde introduces la hora)"
+            android:textStyle="bold"
+            android:textColor="@color/ink"
+            android:textSize="16sp"
+            android:paddingBottom="4dp" />
 
-</LinearLayout>
+        <Spinner
+            android:id="@+id/spinner_zones_from"
+            style="@style/CustomSpinnerStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <!-- Hora en origen -->
+        <TextView
+            android:id="@+id/tv_select_time"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Selecciona hora en la zona de origen"
+            android:textStyle="bold"
+            android:textColor="@color/ink"
+            android:textSize="16sp"
+            android:paddingTop="10dp"
+            android:paddingBottom="4dp" />
+
+        <!-- TimePicker con tamaño reducido -->
+        <FrameLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:scaleX="0.75"
+            android:scaleY="0.75">
+
+            <TimePicker
+                android:id="@+id/time_picker"
+                android:layout_width="wrap_content"
+                android:layout_height="357dp" />
+        </FrameLayout>
+
+        <!-- Zona de destino -->
+        <TextView
+            android:id="@+id/tv_select_zone_to"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/zona_destino_a_la_que_convertir"
+            android:textStyle="bold"
+            android:textColor="@color/ink"
+            android:textSize="16sp"
+            android:paddingTop="10dp"
+            android:paddingBottom="4dp" />
+
+        <Spinner
+            android:id="@+id/spinner_zones_to"
+            style="@style/CustomSpinnerStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <!-- Resultado final -->
+        <TextView
+            android:id="@+id/tv_result"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/resultado_aparecer_aqu"
+            android:textColor="@color/ink_soft"
+            android:textSize="13sp"
+            android:paddingTop="7dp" />
+    </LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
