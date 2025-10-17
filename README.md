@@ -53,15 +53,6 @@
 
 ---
 
-## 📸 Capturas de pantalla
-
-| Inicio | Conversión | Resultado | Vista General
-|---|---|---|
-| ![Home](docs/screenshots/home.png) | ![Convert](docs/screenshots/convert.png) | ![Result](docs/screenshots/result.png) | ![Result](docs/screenshots/vistaGeneral.png)
-| ![Home](docs/screenshots/home1.png) | ![Convert](docs/screenshots/convert1.png) | ![Result](docs/screenshots/result1.png) | ![Result](docs/screenshots/vistaGeneral1.png)
-
----
-
 ## 🚀 Cómo clonar y ejecutar
 
 ### Opción A — Android Studio 🧑‍💻
