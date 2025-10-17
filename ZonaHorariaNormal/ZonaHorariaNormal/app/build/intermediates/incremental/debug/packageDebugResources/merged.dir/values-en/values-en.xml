@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="diferenciaHoraria">Time difference</string>
+    <string name="horaDestino">Time in</string>
+    <string name="horaLocal">"Local time in "</string>
+    <string name="seleccionarDestino">Select destination country</string>
+    <string name="seleccionarOrigen">Select your country and local time</string>
+    <string name="textoBoton">Convert</string>
+    <string name="tituloApp">Time zone converter</string>
+</resources>

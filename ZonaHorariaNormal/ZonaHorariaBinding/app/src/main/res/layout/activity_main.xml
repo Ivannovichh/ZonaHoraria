@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Layout con Data Binding:
+    - El wrapper <layout> hace que se genere la clase ActivityMainBinding.
+    - En código: ActivityMainBinding.inflate(getLayoutInflater()) y setContentView(binding.getRoot()).
+    - Las vistas con @+id se exponen como campos del binding (p.ej., spinner_zones_from -> binding.spinnerZonesFrom).
+-->
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <!--
+        Sección <data> (opcional).
+        Aquí se podrían declarar variables/observables si más adelante se atan datos con @{...}.
+        Por ahora se deja vacía porque se usa el binding de vistas (view references).
+    -->
+    <data>
+        <!-- <variable name="vm" type="tu.paquete.TuViewModel" /> -->
+    </data>
+
+    <!--
+        Layout principal del conversor de zona horaria.
+        Incluye:
+        - GIF animado con título superpuesto (en cabecera).
+        - Controles para seleccionar zonas y hora (panel).
+        - Resultado calculado.
+        Con Data Binding, este ConstraintLayout será accesible como binding.getRoot().
+    -->
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/root"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/gif_background"
+        android:padding="12dp">
+
+        <!--
+            Cabecera con GIF y título.
+            No requiere cambios especiales para Data Binding: el id no es necesario aquí,
+            pero se deja por si se quiere referenciar desde código (binding.headerContainer).
+        -->
+        <FrameLayout
+            android:id="@+id/header_container"
+            android:layout_width="0dp"
+            android:layout_height="180dp"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent">
+
+            <!--
+                GIF animado del globo.
+                Con GifImageView de droidsonroids, se anima automáticamente con android:src.
+                Si el recurso se llama diferente, actualiza @drawable/fondo.
+                Acceso con binding.fondoGIF.
+            -->
+            <pl.droidsonroids.gif.GifImageView
+                android:id="@+id/fondoGIF"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:adjustViewBounds="true"
+                android:scaleType="fitCenter"
+                android:src="@drawable/fondo"
+                android:contentDescription="@string/ZonaHoraria" />
+
+            <!--
+                Título superpuesto centrado sobre el GIF.
+                Acceso con binding.title.
+            -->
+            <TextView
+                android:id="@+id/title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/ZonaHoraria"
+                android:textStyle="bold"
+                android:textSize="26sp"
+                android:textColor="@android:color/white"
+                android:shadowColor="#88000000"
+                android:shadowDx="0"
+                android:shadowDy="2"
+                android:shadowRadius="5"
+                android:background="@drawable/bg_title_overlay"
+                android:paddingHorizontal="20dp"
+                android:paddingVertical="6dp"
+                android:layout_gravity="center" />
+        </FrameLayout>
+
+        <!--
+            Panel con controles y resultado.
+            Todo su contenido será accesible a través del binding por id.
+        -->
+        <LinearLayout
+            android:id="@+id/panel"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:orientation="vertical"
+            android:background="@drawable/bg_panel"
+            android:padding="14dp"
+            android:layout_marginTop="4dp"
+            app:layout_constraintTop_toBottomOf="@id/header_container"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent">
+
+            <!-- Encabezado del combo de ORIGEN (binding.tvSelectZoneFrom) -->
+            <TextView
+                android:id="@+id/tv_select_zone_from"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Zona de origen (donde introduces la hora)"
+                android:textStyle="bold"
+                android:textColor="@color/ink"
+                android:textSize="16sp"
+                android:paddingBottom="4dp" />
+
+            <!-- Spinner de ORIGEN (binding.spinnerZonesFrom) -->
+            <Spinner
+                android:id="@+id/spinner_zones_from"
+                style="@style/CustomSpinnerStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <!-- Encabezado de hora de ORIGEN (binding.tvSelectTime) -->
+            <TextView
+                android:id="@+id/tv_select_time"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Selecciona hora en la zona de origen"
+                android:textStyle="bold"
+                android:textColor="@color/ink"
+                android:textSize="16sp"
+                android:paddingTop="10dp"
+                android:paddingBottom="4dp" />
+
+            <!--
+                Contenedor del TimePicker (binding.timePicker dentro).
+                Se reduce visualmente con scaleX/scaleY.
+            -->
+            <FrameLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:scaleX="0.75"
+                android:scaleY="0.75">
+
+                <!-- TimePicker (binding.timePicker) -->
+                <TimePicker
+                    android:id="@+id/time_picker"
+                    android:layout_width="wrap_content"
+                    android:layout_height="357dp" />
+            </FrameLayout>
+
+            <!-- Encabezado del combo de DESTINO (binding.tvSelectZoneTo) -->
+            <TextView
+                android:id="@+id/tv_select_zone_to"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/zona_destino_a_la_que_convertir"
+                android:textStyle="bold"
+                android:textColor="@color/ink"
+                android:textSize="16sp"
+                android:paddingTop="10dp"
+                android:paddingBottom="4dp" />
+
+            <!-- Spinner de DESTINO (binding.spinnerZonesTo) -->
+            <Spinner
+                android:id="@+id/spinner_zones_to"
+                style="@style/CustomSpinnerStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <!-- Resultado (binding.tvResult) -->
+            <TextView
+                android:id="@+id/tv_result"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/resultado_aparecer_aqu"
+                android:textColor="@color/ink_soft"
+                android:textSize="13sp"
+                android:paddingTop="7dp" />
+        </LinearLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
