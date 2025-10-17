@@ -1,5 +1,0 @@
-<resources xmlns:tools="http://schemas.android.com/tools">
-    <!-- Base application theme. -->
-    <style name="Base.Theme.HoraBinding" parent="Theme.Material3.DayNight.NoActionBar"/>
-    <style name="Theme.HoraBinding" parent="Base.Theme.HoraBinding" />
-</resources>
