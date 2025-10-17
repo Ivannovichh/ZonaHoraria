@@ -55,9 +55,10 @@
 
 ## 📸 Capturas de pantalla
 
-| Inicio | Conversión | Resultado |
+| Inicio | Conversión | Resultado | Vista General
 |---|---|---|
-| ![Home](docs/screenshots/home.png) | ![Convert](docs/screenshots/convert.png) | ![Result](docs/screenshots/result.png) |
+| ![Home](docs/screenshots/home.png) | ![Convert](docs/screenshots/convert.png) | ![Result](docs/screenshots/result.png) | ![Result](docs/screenshots/vistaGeneral.png)
+| ![Home](docs/screenshots/home1.png) | ![Convert](docs/screenshots/convert1.png) | ![Result](docs/screenshots/result1.png) | ![Result](docs/screenshots/vistaGeneral1.png)
 
 ---
 
@@ -94,10 +95,6 @@ cd ZonaHoraria
 4. 🔄 Pulsa **Convertir**.
 5. ✅ Visualiza el resultado con la hora convertida.
 
-**Tips:**
-- Usa tu **zona local** como origen con un botón rápido.
-- Si ves desfases, revisa **horario de verano (DST)**.
-
 ---
 
 ## 🧪 Tests
@@ -118,6 +115,7 @@ cd ZonaHoraria
 
 ---
 
-## 📝 Licencia
+## Autores
 
-Libre uso educativo / personal. Ajusta aquí la licencia que prefieras (MIT, Apache-2.0, etc.).
+Miguel ángel Pérez Martín
+Iván Sánchez Juárez
