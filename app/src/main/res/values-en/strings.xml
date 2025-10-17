@@ -41,4 +41,10 @@
         <item>9</item>
         <item>10</item>
     </string-array>
+    <string name="label_origin">Origin: %1$s (UTC%2$s)</string>
+    <string name="label_destination">Destination: %1$s (UTC%2$s)</string>
+    <string name="label_difference">Time difference (hours): %1$s</string>
+    <string name="label_time_origin">Time in origin: %1$s</string>
+    <string name="label_time_destination">Time in destination: %1$s</string>
+    <string name="label_result">%1$s\n%2$s\n%3$s\n\n%4$s\n%5$s</string>
 </resources>
